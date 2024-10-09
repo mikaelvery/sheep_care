@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sheep_care/screens/home.dart';
 
 class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  const LoadingScreen({super.key});
 
   @override
   LoadingScreenState createState() => LoadingScreenState();
@@ -18,6 +18,7 @@ class LoadingScreenState extends State<LoadingScreen> {
   void _redirect() {
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );

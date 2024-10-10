@@ -75,6 +75,8 @@ flutter:
       - assets/icon_apple.png
       - assets/primaryBg.png
       - assets/sheep_care.png
+      - assets/sheep_care2.png
+      - assets/sheep_care3.png
       - assets/login.png
       - assets/loading.png
 

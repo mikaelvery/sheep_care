@@ -4,9 +4,9 @@
 
 Sheep Care est une application mobile conçue pour aider les utilisateurs à gérer efficacement leurs fermes de brebis. Que vous soyez un éleveur expérimenté ou que vous débutiez dans l'élevage, Sheep Care vous offre des outils simples et intuitifs pour suivre vos brebis, gérer les parcelles et optimiser la production.
 
-<div style="display: flex; justify-content: space-between;">
-    <img src="assets/sheep_care.png" alt="Sheep Care" width="220" height="440" style="margin-right: 50px;">
-    <img src="assets/sheep_care2.png" alt="Sheep Care" width="220" height="440" style="margin-right: 50px;">
+<div style="display: flex; justify-content: space-around;">
+    <img src="assets/sheep_care.png" alt="Sheep Care" width="220" height="440">
+    <img src="assets/sheep_care2.png" alt="Sheep Care" width="220" height="440">
     <img src="assets/sheep_care3.png" alt="Sheep Care" width="220" height="440">
 </div>
 

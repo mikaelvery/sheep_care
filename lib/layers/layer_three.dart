@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sheep_care/config.dart'; // Assurez-vous que vos couleurs sont bien définies
-import 'package:sheep_care/screens/loading.dart'; // Importez votre écran de chargement
+import 'package:sheep_care/config.dart';
+import 'package:sheep_care/screens/loading.dart';
 
 class LayerThree extends StatelessWidget {
   const LayerThree({super.key});
@@ -14,16 +14,16 @@ class LayerThree extends StatelessWidget {
     if (googleUser != null) {
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      // Créer une nouvelle authentification avec Firebase
+      // authentification Firebase
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Connecter à Firebase
+      // Connection à Firebase
       await FirebaseAuth.instance.signInWithCredential(credential);
 
-      // Redirigez vers l'écran de chargement
+      // Redirige vers le loading
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoadingScreen()),
@@ -123,7 +123,7 @@ class LayerThree extends StatelessWidget {
             right: 60,
             child: GestureDetector(
               onTap: () {
-                signInWithGoogle(context); // Appel à la fonction de connexion
+                signInWithGoogle(context); 
               },
               child: Container(
                 width: 99,
@@ -169,7 +169,7 @@ class LayerThree extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    signInWithGoogle(context); // Appel à la fonction de connexion
+                    signInWithGoogle(context);
                   },
                   child: Container(
                     width: 59,

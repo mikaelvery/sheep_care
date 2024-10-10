@@ -427,7 +427,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         title: Container(
-          alignment: Alignment.center, // Centre le contenu
+          alignment: Alignment.center,
           child: const Text(
             'Sheep Care',
             style: TextStyle(
@@ -475,7 +475,7 @@ class HomeScreen extends StatelessWidget {
             ),
             // Défilement horizontal des cartes de prairie
             SizedBox(
-              height: 200, // Hauteur conteneur
+              height: 200,
               child: ListView.builder(
                 padding: const EdgeInsets.all(10.0),
                 scrollDirection: Axis.horizontal,
@@ -497,7 +497,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       elevation: 5,
                       child: SizedBox(
-                        width: 150, // Largeur pour les cartes
+                        width: 150,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -553,7 +553,7 @@ class HomeScreen extends StatelessWidget {
             ),
             // Défilement horizontal des cartes de parcelles labourables
             SizedBox(
-              height: 200, // Hauteur pour le conteneur
+              height: 200, 
               child: ListView.builder(
                 padding: const EdgeInsets.all(10.0),
                 scrollDirection: Axis.horizontal,

@@ -48,7 +48,7 @@ class LoadingScreenState extends State<LoadingScreen> {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                   Text(
-                    'bêêêêh, Sacha !',
+                    'Boujour Sacha !',
                     style: TextStyle(
                       fontSize: 36.0,
                       fontWeight: FontWeight.bold,

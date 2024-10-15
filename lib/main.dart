@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:sheep_care/layers/layer_one.dart';
 import 'package:sheep_care/layers/layer_two.dart';
 import 'package:sheep_care/layers/layer_three.dart';
+import 'package:sheep_care/screens/home.dart';
+import 'package:sheep_care/screens/parcels_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,10 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/parcelles': (context) => const ParcelsScreen()
+      },
     );
   }
 }

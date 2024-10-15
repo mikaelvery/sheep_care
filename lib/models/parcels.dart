@@ -1,3 +1,5 @@
+import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
+
 class Parcels {
   final String nom;
   final double surface;
@@ -8,7 +10,9 @@ class Parcels {
   final int? deuxiemeCoupe;
   final double? bottesHa2;
   final String imageUrl;
-
+  final LatLng coordinates;
+  final List<LatLng> polygonCoordinates;
+  
   Parcels({
     required this.nom,
     required this.surface,
@@ -18,6 +22,8 @@ class Parcels {
     this.bottesHa1,
     this.deuxiemeCoupe,
     this.bottesHa2,
-    required this.imageUrl, 
+    required this.imageUrl,
+    required this.coordinates,
+    required this.polygonCoordinates,
   });
 }

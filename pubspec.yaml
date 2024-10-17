@@ -79,6 +79,8 @@ flutter:
       - assets/sheep_care3.png
       - assets/login.png
       - assets/loading.png
+      - assets/appBar.png
+      - assets/avatar.png
 
   fonts:
   - family: Poppins

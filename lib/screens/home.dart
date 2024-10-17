@@ -5,23 +5,23 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+class HomeScreenState extends State<HomeScreen> {
+  int selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120.0), 
+        preferredSize: const Size.fromHeight(120.0),
         child: Stack(
           children: [
             Container(
@@ -40,32 +40,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Avatar à gauche
+                      // Avatar
                       const CircleAvatar(
                         backgroundColor: Color.fromARGB(255, 255, 185, 255),
-                        radius: 24,
+                        radius: 26,
                         backgroundImage: AssetImage('assets/brebis.png'),
                       ),
-                      // Notification à droite
+                      // Notification
                       CircleAvatar(
-                        backgroundColor: Colors.white,
+                      backgroundColor: const Color(0xFF47B2A3),
                         radius: 20,
                         child: IconButton(
-                          icon: const Icon(Icons.notifications, color: Colors.black),
+                          icon: const Icon(Icons.notifications_none, color: Color.fromARGB(255, 255, 255, 255)),
                           onPressed: () {
-                            // Action de notification
+                            // Action pour la page notification
                           },
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6), // Espace entre l'avatar et le texte
+                  const SizedBox(height: 6),
                   const Text(
                     'Hi, Sacha',
                     style: TextStyle(
+                      fontFamily: 'Poppins', 
                       color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -83,14 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 4),
             Text(
               'Bienvenue à Lagnac',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
             ),
             SizedBox(height: 4),
             Text(
-              'Gérez efficacement tous les aspects de la ferme.',
+              'Que veux-tu faire aujourd\'hui ?',
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
-            SizedBox(height: 25),
+            SizedBox(height: 16),
             SectionTitle(title: 'Gestion de la Ferme'),
             Row(
               children: [
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CustomCard(
                     icon: Icons.inventory_2,
                     title: 'Gestion des Stocks',
-                    subtitle: 'Gestion des stocks efficacement.',
+                    subtitle: 'Gérez vos stocks efficacement.',
                     color: Colors.blueAccent,
                   ),
                 ),
@@ -107,13 +108,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CustomCard(
                     icon: Icons.pets,
                     title: 'Gestion des Brebis',
-                    subtitle: 'Suivez et gérez vos brebis facilement.',
+                    subtitle: 'Suivez et gérez vos brebis.',
                     color: Colors.greenAccent,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 8),
             SectionTitle(title: 'Suivi des Cultures et Équipements'),
             Row(
               children: [
@@ -121,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CustomCard(
                     icon: Icons.agriculture,
                     title: 'Suivi des Cultures',
-                    subtitle: 'Suivi des cultures et récoltes.',
+                    subtitle: 'Suivez les cultures et récoltes.',
                     color: Colors.orangeAccent,
                   ),
                 ),
@@ -130,13 +131,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CustomCard(
                     icon: Icons.build,
                     title: 'Suivi du Matériel',
-                    subtitle: 'Gestion des outils et machines.',
+                    subtitle: 'Gérez les outils et machines.',
                     color: Colors.redAccent,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 8),
             SectionTitle(title: 'Statistiques et Notifications'),
             Row(
               children: [
@@ -159,11 +160,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+            SizedBox(height: 8),
+            SectionTitle(title: 'Quand je me touche la bite'),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomCard(
+                    icon: Icons.bar_chart,
+                    title: 'Statistiques',
+                    subtitle: 'Visualisez les statistiques.',
+                    color: Color.fromARGB(255, 64, 245, 251),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: CustomCard(
+                    icon: Icons.notifications,
+                    title: 'Notifications',
+                    subtitle: 'Rappels pour les semis et traitements.',
+                    color: Color.fromARGB(255, 255, 100, 229),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         onTap: _onItemTapped,
       ),
     );
@@ -203,8 +227,7 @@ class CustomCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               title,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
             ),
             const SizedBox(height: 4),
             Text(
@@ -227,10 +250,16 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: Row(
+        children: [
+          const Icon(Icons.arrow_right, color: Colors.black),
+          const SizedBox(width: 8),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+        ],
       ),
     );
   }

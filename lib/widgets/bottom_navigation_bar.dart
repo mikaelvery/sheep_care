@@ -31,33 +31,34 @@ class CustomBottomNavigationBar extends StatelessWidget {
         );
         break;
       case 2:
-        // Action pour le troisième bouton (Paramètres par exemple)
+        // Action pour le troisième bouton 
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0), // Décoller la barre des bords
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white, // Couleur de fond blanche neutre
-          borderRadius: BorderRadius.circular(30), // Arrondir les bords
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2), // Ombre légère
-              spreadRadius: 1,
-              blurRadius: 8,
-              offset: const Offset(0, 3), // Décalage de l'ombre
-            ),
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), 
+      decoration: BoxDecoration(
+        color: Colors.white, 
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3), 
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: const Offset(0, 4), 
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30), 
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent, // Fond transparent pour voir le style arrondi
+          backgroundColor: Colors.transparent, 
           elevation: 0,
-          selectedItemColor: const Color.fromARGB(255, 30, 224, 192), // Couleur verte pour l'icône active
-          unselectedItemColor: Colors.grey, // Couleur grise pour les icônes inactives
+          selectedItemColor: const Color.fromARGB(255, 30, 224, 192), 
+          unselectedItemColor: Colors.grey, 
           currentIndex: currentIndex,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {

@@ -244,7 +244,7 @@ final List<Parcels> prairieParcels = [
       deuxiemeCoupe: null,
       bottesHa2: null,
       imageUrl: 'brebis_2.jpg',
-      coordinates: const LatLng(44.474905, 2.597926),
+      coordinates: const LatLng(44.478855, 2.595974),
       polygonCoordinates: [
         const LatLng(44.474155, 2.599329),
         const LatLng(44.477143, 2.593367),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sheep_care/models/parcels.dart';
 import 'package:sheep_care/models/parcels_coordinates.dart';
 import 'package:sheep_care/screens/parcels_detail_screen.dart';
+import 'package:sheep_care/widgets/app_bar.dart';
 import '../../widgets/bottom_navigation_bar.dart';
 
 class ParcelsScreen extends StatefulWidget {
@@ -16,17 +16,17 @@ class ParcelsScreenState extends State<ParcelsScreen> {
   GoogleMapController? mapController;
   List<Marker> markers = [];
   List<Polygon> polygons = [];
-
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = 1;
+      _selectedIndex = index;
     });
     if (index == 0) {
+      // Vérifiez que la route existe et qu'elle ne plante pas
       Navigator.pushReplacementNamed(context, '/home');
     } else if (index == 1) {
-
+      // Reste sur l'écran des parcelles
     } else if (index == 2) {
       Navigator.pushReplacementNamed(context, '/settings');
     }
@@ -171,9 +171,9 @@ class ParcelsScreenState extends State<ParcelsScreen> {
             polygonId: PolygonId(parcel.nom),
             points: parcel.polygonCoordinates,
             strokeColor:
-                const Color.fromARGB(255, 243, 236, 33).withOpacity(0.8),
-            fillColor: const Color.fromARGB(255, 243, 236, 33).withOpacity(0.5),
-            strokeWidth: 3,
+                const Color.fromARGB(255, 33, 243, 201).withOpacity(0.8),
+            fillColor: const Color.fromARGB(255, 33, 243, 194).withOpacity(0.5),
+            strokeWidth: 2,
           ));
         }
       }
@@ -184,9 +184,9 @@ class ParcelsScreenState extends State<ParcelsScreen> {
             polygonId: PolygonId(parcel.nom),
             points: parcel.polygonCoordinates,
             strokeColor:
-                const Color.fromARGB(255, 117, 243, 33).withOpacity(0.8),
+                const Color.fromARGB(255, 31, 102, 90).withOpacity(0.8),
             fillColor: const Color.fromARGB(255, 82, 243, 33).withOpacity(0.5),
-            strokeWidth: 3,
+            strokeWidth: 2,
           ));
         }
       }
@@ -196,21 +196,19 @@ class ParcelsScreenState extends State<ParcelsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 47, 144, 138),
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: Container(
-          alignment: Alignment.center,
-          child: const Text(
+      appBar: const CustomAppBar(
+        titleWidget: Center( 
+          child: Text(
             'Nos Parcelles',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
               fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
           ),
         ),
+        showBackButton: true,
+        actions: [],
       ),
       body: GoogleMap(
         onMapCreated: _onMapCreated,
@@ -225,8 +223,8 @@ class ParcelsScreenState extends State<ParcelsScreen> {
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-      ),
-      backgroundColor: const Color.fromARGB(255, 47, 144, 138),
+        
+      ),backgroundColor: Colors.transparent,
     );
   }
 }

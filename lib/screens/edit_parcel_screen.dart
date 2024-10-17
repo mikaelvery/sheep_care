@@ -14,7 +14,7 @@ class EditParcelScreen extends StatelessWidget {
           'Modifier la parcelle',
           style: TextStyle(color: Colors.white), 
         ),
-        backgroundColor: const Color.fromARGB(255, 56, 90, 83),
+        backgroundColor: const Color(0xFF007B5F),
       ),
       body: SingleChildScrollView( 
         padding: const EdgeInsets.all(16.0),

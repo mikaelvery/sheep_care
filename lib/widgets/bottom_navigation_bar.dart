@@ -17,48 +17,70 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     switch (index) {
       case 0:
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),
+          (Route<dynamic> route) => false,
         );
         break;
       case 1:
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const ParcelsScreen()),
+          (Route<dynamic> route) => false,
+        );
         break;
       case 2:
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const SettingsScreen()),
-        // );
+        // Action pour le troisième bouton 
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: const Color.fromARGB(255, 47, 144, 138),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
-      currentIndex: currentIndex,
-      onTap: (index) {
-        onTap(index); 
-        _handleNavigation(index, context); 
-      },
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Accueil',
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), 
+      decoration: BoxDecoration(
+        color: Colors.white, 
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3), 
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: const Offset(0, 4), 
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30), 
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent, 
+          elevation: 0,
+          selectedItemColor: const Color.fromARGB(255, 30, 224, 192), 
+          unselectedItemColor: Colors.grey, 
+          currentIndex: currentIndex,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            onTap(index);
+            _handleNavigation(index, context);
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Accueil',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              label: 'Parcelles',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Paramètres',
+            ),
+          ],
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.map),
-          label: 'Parcelles',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Paramètres',
-        ),
-      ],
+      ),
     );
   }
-
 }

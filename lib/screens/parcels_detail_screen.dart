@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sheep_care/widgets/app_bar.dart';
 import '../models/parcels.dart';
 import 'edit_parcel_screen.dart';
 
@@ -7,29 +8,28 @@ class ParcelsDetailScreen extends StatelessWidget {
 
   const ParcelsDetailScreen({required this.parcel, super.key});
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
+      appBar: CustomAppBar(
+        titleWidget: Text(
           parcel.nom,
           style: const TextStyle(
-            fontSize: 22,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
-            color: Colors.white, 
+            fontSize: 20,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 56, 90, 83),
-        elevation: 0,
+        showBackButton: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit, color: Colors.white), 
+            icon: const Icon(Icons.edit, color: Colors.white),
             tooltip: 'Modifier',
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditParcelScreen(parcel: parcel), 
+                  builder: (context) => EditParcelScreen(parcel: parcel),
                 ),
               );
             },

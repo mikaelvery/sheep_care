@@ -28,15 +28,9 @@ class LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 11, 94, 89), // Couleur de fond
       body: Stack(
         children: [
-          // Image de fond
-          Positioned.fill(
-            child: Image.asset(
-              'assets/primaryBg.png',
-              fit: BoxFit.cover,
-            ),
-          ),
           // Image de la brebis
           Positioned.fill(
             child: Center(
@@ -46,19 +40,19 @@ class LoadingScreenState extends State<LoadingScreen> {
               ),
             ),
           ),
-          // Texte et indicateur de progression en bas de l'écran
+          // Texte et indicateur de progression
           const Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 40.0),
+              padding: EdgeInsets.only(bottom: 40.0), // Réduit l'espace en bas
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // Indicateur de progression
                   CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
-                  SizedBox(height: 16.0), // Espace entre l'indicateur et le texte
+                  SizedBox(height: 4.0), // Réduit l'espace entre l'indicateur et le texte
                   Text(
                     'Bonjour Sacha !',
                     style: TextStyle(

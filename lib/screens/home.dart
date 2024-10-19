@@ -5,232 +5,244 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+class HomeScreenState extends State<HomeScreen> {
+  int selectedIndex = 0;
+
+  // Exemple de liste dynamique de données pour les cartes
+  final List<Map<String, String>> _cardData = [
+    {
+      'title': 'Gestion des Stocks',
+      'subtitle': 'Gérez vos stocks efficacement.',
+      'imagePath': 'assets/images/foin.png',
+    },
+    {
+      'title': 'Gestion des Brebis',
+      'subtitle': 'Suivez et gérez vos brebis.',
+      'imagePath': 'assets/brebis.png',
+    },
+    {
+      'title': 'Suivi des Cultures',
+      'subtitle': 'Suivez les cultures et récoltes.',
+      'imagePath': 'assets/images/trefle.png',
+    },
+    {
+      'title': 'Suivi du Matériel',
+      'subtitle': 'Gérez les outils et machines.',
+      'imagePath': 'assets/images/materiel.png',
+    },
+    {
+      'title': 'Statistiques',
+      'subtitle': 'Visualisez les statistiques.',
+      'imagePath': 'assets/images/statistique.png',
+    },
+    {
+      'title': 'Notifications',
+      'subtitle': 'Rappels pour les semis et traitements.',
+      'imagePath': 'assets/images/notification.png',
+    },
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120.0), 
-        child: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/appBar.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 65.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: const Color.fromARGB(255, 11, 94, 89),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: _onItemTapped,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+
+              // Header Section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Avatar à gauche
-                      const CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 255, 185, 255),
-                        radius: 24,
-                        backgroundImage: AssetImage('assets/brebis.png'),
-                      ),
-                      // Notification à droite
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 20,
-                        child: IconButton(
-                          icon: const Icon(Icons.notifications, color: Colors.black),
-                          onPressed: () {
-                            // Action de notification
-                          },
+                      Text(
+                        'Hi, Sacha',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '18 Oct 2024',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 200, 255, 200)),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6), // Espace entre l'avatar et le texte
-                  const Text(
-                    'Hi, Sacha',
-                    style: TextStyle(
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 70, 173, 142),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: const Icon(
+                      Icons.notifications,
                       color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 25),
+
+              // Search bar
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  width: size.width * 0.7,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 248, 248, 248),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search,
+                          color: Colors.black54.withOpacity(0.6)),
+                      const SizedBox(width: 6),
+                      const Expanded(
+                        child: TextField(
+                          showCursor: false,
+                          decoration: InputDecoration(
+                            hintText: 'Search Parcel',
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      Icon(Icons.mic, color: Colors.black54.withOpacity(0.6)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // List of Cards
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _cardData.length,
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        // Action à réaliser lors du clic sur la carte
+                      },
+                      child: CustomCard(
+                        title: _cardData[index]['title']!,
+                        subtitle: _cardData[index]['subtitle']!,
+                        imagePath: _cardData[index]['imagePath']!,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 4),
-            Text(
-              'Bienvenue à Lagnac',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 4),
-            Text(
-              'Gérez efficacement tous les aspects de la ferme.',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-            SizedBox(height: 25),
-            SectionTitle(title: 'Gestion de la Ferme'),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomCard(
-                    icon: Icons.inventory_2,
-                    title: 'Gestion des Stocks',
-                    subtitle: 'Gestion des stocks efficacement.',
-                    color: Colors.blueAccent,
-                  ),
-                ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomCard(
-                    icon: Icons.pets,
-                    title: 'Gestion des Brebis',
-                    subtitle: 'Suivez et gérez vos brebis facilement.',
-                    color: Colors.greenAccent,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            SectionTitle(title: 'Suivi des Cultures et Équipements'),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomCard(
-                    icon: Icons.agriculture,
-                    title: 'Suivi des Cultures',
-                    subtitle: 'Suivi des cultures et récoltes.',
-                    color: Colors.orangeAccent,
-                  ),
-                ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomCard(
-                    icon: Icons.build,
-                    title: 'Suivi du Matériel',
-                    subtitle: 'Gestion des outils et machines.',
-                    color: Colors.redAccent,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            SectionTitle(title: 'Statistiques et Notifications'),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomCard(
-                    icon: Icons.bar_chart,
-                    title: 'Statistiques',
-                    subtitle: 'Visualisez les statistiques.',
-                    color: Colors.purpleAccent,
-                  ),
-                ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomCard(
-                    icon: Icons.notifications,
-                    title: 'Notifications',
-                    subtitle: 'Rappels pour les semis et traitements.',
-                    color: Colors.tealAccent,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     );
   }
 }
 
 class CustomCard extends StatelessWidget {
-  final IconData icon;
   final String title;
   final String subtitle;
-  final Color color;
+  final String imagePath;
 
   const CustomCard({
     super.key,
-    required this.icon,
     required this.title,
     required this.subtitle,
-    required this.color,
+    required this.imagePath,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
       ),
       elevation: 4,
+      color: const Color.fromARGB(255, 29, 145, 145),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundColor: color,
-              child: Icon(icon, color: Colors.white),
+            // Image à gauche
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+                height: 80,
+                width: 80,
+              ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            const SizedBox(width: 15), // Espacement entre l'image et le texte
+
+            // Colonne avec le texte au centre
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-              textAlign: TextAlign.center,
+
+            // Flèche à droite pour la redirection
+            GestureDetector(
+              onTap: () {
+                // Action future pour redirection vers la page de détails
+              },
+              child: const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white70,
+                size: 20,
+              ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SectionTitle extends StatelessWidget {
-  final String title;
-
-  const SectionTitle({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }

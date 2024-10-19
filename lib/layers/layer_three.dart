@@ -4,40 +4,63 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sheep_care/config.dart';
 import 'package:sheep_care/screens/loading.dart';
 
-class LayerThree extends StatelessWidget {
+class LayerThree extends StatefulWidget {
   const LayerThree({super.key});
 
-  Future<void> signInWithGoogle(BuildContext context) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  @override
+  LayerThreeState createState() => LayerThreeState();
+}
 
-    if (googleUser != null) {
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+class LayerThreeState extends State<LayerThree> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isChecked = false;
 
-      // authentification Firebase
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      // Connection à Firebase
-      await FirebaseAuth.instance.signInWithCredential(credential);
-
-      // Redirige vers le loading
+  Future<void> signInWithEmailPassword(BuildContext context, String email, String password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const LoadingScreen()),
       );
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+    }
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => const LoadingScreen()),
+        );
+      }
+    } catch (error) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur de connexion: $error')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isChecked = false;
-
     return SizedBox(
-      height: 584,
+      height: 800, // Augmenter la hauteur pour accueillir tous les éléments
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: <Widget>[
@@ -53,16 +76,17 @@ class LayerThree extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 59,
             top: 129,
             child: SizedBox(
               width: 310,
               child: TextField(
-                decoration: InputDecoration(
+                controller: emailController,
+                decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   hintText: 'Enter User ID or Email',
-                  hintStyle: TextStyle(color: hintText),
+                  hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
             ),
@@ -79,40 +103,43 @@ class LayerThree extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 59,
             top: 229,
             child: SizedBox(
               width: 310,
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   hintText: 'Enter Password',
-                  hintStyle: TextStyle(color: hintText),
+                  hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
             ),
           ),
           Positioned(
             left: 46,
-            top: 361,
+            top: 299, // Ajuster la position vers le bas
             child: Checkbox(
               checkColor: Colors.black,
-              activeColor: checkbox,
+              activeColor: Colors.blue,
               value: isChecked,
               onChanged: (bool? value) {
-                isChecked = value!;
+                setState(() {
+                  isChecked = value!;
+                });
               },
             ),
           ),
           const Positioned(
             left: 87,
-            top: 375,
+            top: 315, // Ajuster la position vers le bas
             child: Text(
               'Remember Me',
               style: TextStyle(
-                color: forgotPasswordText,
+                color: Colors.black,
                 fontSize: 16,
                 fontFamily: 'Poppins-Medium',
                 fontWeight: FontWeight.w500,
@@ -120,11 +147,11 @@ class LayerThree extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 365,
+            top: 305, 
             right: 60,
             child: GestureDetector(
               onTap: () {
-                signInWithGoogle(context); 
+                signInWithEmailPassword(context, emailController.text, passwordController.text);
               },
               child: Container(
                 width: 99,
@@ -153,16 +180,16 @@ class LayerThree extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 432,
+            top: 385, 
             left: 59,
             child: Container(
               height: 0.5,
               width: 310,
-              color: inputBorder,
+              color: Colors.grey,
             ),
           ),
-           Positioned(
-            top: 300,
+          Positioned(
+            top: 400, 
             left: 120,
             right: 120,
             child: Row(
@@ -178,8 +205,9 @@ class LayerThree extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(color: signInBox),
                       borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
+                        topLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
                     ),
                     child: Image.asset(
                       'assets/icon_google.png',

@@ -197,12 +197,14 @@ class ParcelsScreenState extends State<ParcelsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        titleWidget: Text( 
-          'Nos Parcelles',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+        titleWidget: Center( 
+          child: Text(
+            'Nos Parcelles',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
         ),
         showBackButton: true,
@@ -221,8 +223,8 @@ class ParcelsScreenState extends State<ParcelsScreen> {
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-      ),
-      backgroundColor: const Color.fromARGB(255, 31, 102, 90),
+        
+      ),backgroundColor: Colors.transparent,
     );
   }
 }

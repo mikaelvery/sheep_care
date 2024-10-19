@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       home: const LoginPage(),
       routes: {
         '/home': (context) => const HomeScreen(),
-        '/parcelles': (context) => const ParcelsScreen()
+        '/parcelles': (context) => const ParcelsScreen(),
       },
     );
   }
@@ -39,18 +39,12 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/primaryBg.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+        color: const Color.fromARGB(255, 11, 94, 89), 
         child: const Stack(
           children: <Widget>[
-            
-            Positioned(top: 330, right: 0, bottom: 0, child: LayerOne()),
-            Positioned(top: 350, right: 0, bottom: 15, child: LayerTwo()),
-            Positioned(top: 330, right: 0, bottom: 48, child: LayerThree()),
+            Positioned(top: 180, right: 0, bottom: 0, child: LayerOne()),
+            Positioned(top: 190, right: 0, bottom: 15, child: LayerTwo()),
+            Positioned(top: 190, right: 0, bottom: 60, child: LayerThree()),
           ],
         ),
       ),

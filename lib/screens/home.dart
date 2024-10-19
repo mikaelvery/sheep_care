@@ -55,7 +55,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 15, 116, 116),
+      backgroundColor: const Color.fromARGB(255, 11, 94, 89),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: _onItemTapped,

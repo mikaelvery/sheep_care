@@ -5,62 +5,69 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
-}
-
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    println "Loaded keystore properties from ${keystorePropertiesFile.absolutePath}"
+    println "storeFile=${keystoreProperties['storeFile']}"
+} else {
+    println "keystore.properties file not found at ${keystorePropertiesFile.absolutePath}"
 }
 
 android {
-    namespace "com.example.sheep_care"
-    compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
-
+    namespace = "com.example.sheep_care"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8
     }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     defaultConfig {
-        applicationId "com.example.sheep_care"
-        minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        applicationId = "com.example.sheep_care"
+        minSdk = 23
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
-
+    signingConfigs {
+        // debug {
+        //     storeFile(keystoreProperties['storeFile'])
+        //     storePassword keystoreProperties['storePassword']
+        //     keyAlias keystoreProperties['keyAlias']
+        //     keyPassword keystoreProperties['keyPassword']
+        // }
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        // debug {
+        //     signingConfig signingConfigs.debug
+        //     minifyEnabled false
+        //     shrinkResources false
+        //     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        // }
     }
 }
 
 flutter {
-    source '../..'
+    source = "../.."
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-auth:21.0.1' // Firebase Authentication
-    implementation 'com.google.android.gms:play-services-auth:20.2.0' // Google Sign-In
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
 }

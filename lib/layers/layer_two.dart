@@ -7,8 +7,8 @@ class LayerTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 420,
-      height: 584,
+      width: 400,
+      height: 784,
       decoration: const BoxDecoration(
         color: layerTwoBg,
         borderRadius: BorderRadius.only(

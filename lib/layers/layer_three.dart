@@ -8,10 +8,10 @@ class LayerThree extends StatefulWidget {
   const LayerThree({super.key});
 
   @override
-  _LayerThreeState createState() => _LayerThreeState();
+  LayerThreeState createState() => LayerThreeState();
 }
 
-class _LayerThreeState extends State<LayerThree> {
+class LayerThreeState extends State<LayerThree> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isChecked = false;
@@ -20,10 +20,12 @@ class _LayerThreeState extends State<LayerThree> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const LoadingScreen()),
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur: $e')));
     }
   }
@@ -44,11 +46,13 @@ class _LayerThreeState extends State<LayerThree> {
         await FirebaseAuth.instance.signInWithCredential(credential);
 
         Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(builder: (context) => const LoadingScreen()),
         );
       }
     } catch (error) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erreur de connexion: $error')));
     }
   }

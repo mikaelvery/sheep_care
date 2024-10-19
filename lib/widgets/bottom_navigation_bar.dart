@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sheep_care/screens/home.dart';
 import 'package:sheep_care/screens/parcels_screen.dart';
 
-const Color BottomNavBgColor = Color.fromARGB(255, 9, 77, 77);
+const Color bottomNavBgColor = Color.fromARGB(255, 9, 77, 77);
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;

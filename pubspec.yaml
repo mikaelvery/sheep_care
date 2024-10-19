@@ -38,6 +38,7 @@ dependencies:
   google_sign_in: ^6.2.1
   firebase_auth: ^5.3.1
   permission_handler: ^11.3.1
+  iconsax: ^0.0.8
   
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,12 @@ flutter:
       - assets/loading.png
       - assets/appBar.png
       - assets/avatar.png
+      - assets/images/trefle.png
+      - assets/images/foin.png
+      - assets/images/notification.png
+      - assets/images/materiel.png
+      - assets/images/statistique.png 
+      - assets/images/brebis.png     
 
   fonts:
   - family: Poppins

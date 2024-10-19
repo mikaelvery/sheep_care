@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sheep_care/screens/home.dart';
 import 'package:sheep_care/screens/parcels_screen.dart';
 
+const Color BottomNavBgColor = Color.fromARGB(255, 9, 77, 77);
+
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -31,7 +33,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         );
         break;
       case 2:
-        // Action pour le troisième bouton 
+        // Action pour le troisième bouton
         break;
     }
   }
@@ -39,47 +41,45 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), 
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white, 
-        borderRadius: BorderRadius.circular(30),
+        color: const Color(0xFF134E4E), // Couleur de fond mise à jour
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3), 
-            spreadRadius: 2,
-            blurRadius: 10,
-            offset: const Offset(0, 4), 
+            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3),
+            offset: const Offset(0, 20),
+            blurRadius: 20,
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30), 
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent, 
-          elevation: 0,
-          selectedItemColor: const Color.fromARGB(255, 30, 224, 192), 
-          unselectedItemColor: Colors.grey, 
-          currentIndex: currentIndex,
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            onTap(index);
-            _handleNavigation(index, context);
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Accueil',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: List.generate(3, (index) {
+          return GestureDetector(
+            onTap: () {
+              onTap(index);
+              _handleNavigation(index, context);
+            },
+            child: SizedBox(
+              height: 36,
+              width: 36,
+              child: Icon(
+                index == 0
+                    ? Icons.home
+                    : index == 1
+                        ? Icons.map
+                        : Icons.person,
+                color: index == currentIndex
+                    ? const Color(
+                        0xFFEFEBE2) 
+                    : const Color(
+                        0xFF8D8D8D), 
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              label: 'Parcelles',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Paramètres',
-            ),
-          ],
-        ),
+          );
+        }),
       ),
     );
   }

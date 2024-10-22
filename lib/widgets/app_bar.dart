@@ -2,39 +2,48 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget titleWidget;
-  final List<Widget> actions;
   final bool showBackButton;
+  final List<Widget> actions;
+  final VoidCallback? onBackPressed;
 
   const CustomAppBar({
-    super.key,
     required this.titleWidget,
-    this.actions = const [],
     required this.showBackButton,
+    required this.actions,
+    this.onBackPressed,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF47B2A3), // Une couleur verte douce
-              Color(0xFF70D4B4), // Une couleur plus claire pour créer un effet de dégradé
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      leading: showBackButton
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                if (onBackPressed != null) {
+                  onBackPressed!(); 
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+            )
+          : null,
+      title: Row(
+        mainAxisAlignment: showBackButton ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+        children: [
+          if (showBackButton) const SizedBox(width: 48), 
+          Expanded(
+            child: Center(child: titleWidget), 
           ),
-        ),
+          if (actions.isNotEmpty) const SizedBox(width: 48), 
+        ],
       ),
-      elevation: 0,
-      title: titleWidget,
-      centerTitle: false,
       actions: actions,
+      backgroundColor: const Color.fromARGB(255, 11, 94, 89),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(150.0);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

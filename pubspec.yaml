@@ -82,8 +82,6 @@ flutter:
       - assets/sheep_care3.png
       - assets/login.png
       - assets/loading.png
-      - assets/appBar.png
-      - assets/avatar.png
       - assets/images/trefle.png
       - assets/images/foin.png
       - assets/images/notification.png

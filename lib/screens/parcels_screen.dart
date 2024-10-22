@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sheep_care/models/parcels_coordinates.dart';
+import 'package:sheep_care/screens/home.dart';
 import 'package:sheep_care/screens/parcels_detail_screen.dart';
 import 'package:sheep_care/widgets/app_bar.dart';
-import '../../widgets/bottom_navigation_bar.dart';
 
 class ParcelsScreen extends StatefulWidget {
   const ParcelsScreen({super.key});
@@ -16,21 +16,6 @@ class ParcelsScreenState extends State<ParcelsScreen> {
   GoogleMapController? mapController;
   List<Marker> markers = [];
   List<Polygon> polygons = [];
-  int _selectedIndex = 1;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    if (index == 0) {
-      // Vérifiez que la route existe et qu'elle ne plante pas
-      Navigator.pushReplacementNamed(context, '/home');
-    } else if (index == 1) {
-      // Reste sur l'écran des parcelles
-    } else if (index == 2) {
-      Navigator.pushReplacementNamed(context, '/settings');
-    }
-  }
 
   @override
   void initState() {
@@ -85,7 +70,7 @@ class ParcelsScreenState extends State<ParcelsScreen> {
       );
     }
   }
-  
+
   // polygones pour les parcelles de prairie
   void _createPolygons() {
     for (var parcel in prairieParcels) {
@@ -196,19 +181,25 @@ class ParcelsScreenState extends State<ParcelsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        titleWidget: Center( 
-          child: Text(
-            'Nos Parcelles',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+      appBar: CustomAppBar(
+        titleWidget: const Text(
+          'My Parcels',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
         showBackButton: true,
-        actions: [],
+        onBackPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        },
+        actions: const [
+          SizedBox(width: 48), 
+        ],
       ),
       body: GoogleMap(
         onMapCreated: _onMapCreated,
@@ -218,13 +209,12 @@ class ParcelsScreenState extends State<ParcelsScreen> {
           target: LatLng(44.486708, 2.608853),
           zoom: 14.2,
         ),
-        mapType: MapType.satellite, 
+        mapType: MapType.satellite,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        
-      ),backgroundColor: Colors.transparent,
+      backgroundColor: const Color.fromARGB(255, 31, 102, 90),
     );
   }
 }
+

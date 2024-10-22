@@ -8,7 +8,7 @@ class ParcelsDetailScreen extends StatelessWidget {
 
   const ParcelsDetailScreen({required this.parcel, super.key});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(

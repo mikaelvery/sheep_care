@@ -18,7 +18,6 @@ class LoadingScreenState extends State<LoadingScreen> {
   void _redirect() {
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
@@ -28,7 +27,7 @@ class LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 11, 94, 89), // Couleur de fond
+      backgroundColor: const Color.fromARGB(255, 11, 94, 89), 
       body: Stack(
         children: [
           // Image de la brebis
@@ -44,7 +43,7 @@ class LoadingScreenState extends State<LoadingScreen> {
           const Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 40.0), // Réduit l'espace en bas
+              padding: EdgeInsets.only(bottom: 40.0), 
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -52,7 +51,7 @@ class LoadingScreenState extends State<LoadingScreen> {
                   CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
-                  SizedBox(height: 4.0), // Réduit l'espace entre l'indicateur et le texte
+                  SizedBox(height: 4.0), 
                   Text(
                     'Bonjour Sacha !',
                     style: TextStyle(

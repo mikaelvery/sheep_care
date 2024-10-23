@@ -124,7 +124,7 @@ class HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                        // Action à réaliser lors du clic sur la carte
+                        
                       },
                       child: CustomCard(
                         title: cardData[index]['title']!,

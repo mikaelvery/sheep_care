@@ -17,14 +17,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
-      notificationCount++; 
-    });
-  }
-
-  void _addNotification() {
-    setState(() {
-      notificationCount++; 
+      selectedIndex = index; 
     });
   }
 
@@ -88,7 +81,7 @@ class HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        padding: const EdgeInsets.all(6), 
+                        padding: const EdgeInsets.all(6),
                         child: const Icon(
                           Icons.notifications,
                           color: Colors.white,
@@ -96,8 +89,8 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                       if (notificationCount > 0)
                         Positioned(
-                          right: -6, 
-                          top: -6, 
+                          right: -6,
+                          top: -6,
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 244, 54, 54),
@@ -112,8 +105,8 @@ class HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             constraints: const BoxConstraints(
-                              minWidth: 20, 
-                              minHeight: 20, 
+                              minWidth: 20,
+                              minHeight: 20,
                             ),
                             child: Center(
                               child: Text(
@@ -184,7 +177,9 @@ class HomeScreenState extends State<HomeScreen> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+
+                      },
                       child: CustomCard(
                         title: cardData[index]['title']!,
                         subtitle: cardData[index]['subtitle']!,

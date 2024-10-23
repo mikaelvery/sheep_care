@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:sheep_care/screens/parcels_screen.dart';
 
 const Color bottomNavBgColor = Color.fromARGB(255, 11, 94, 89);
 
@@ -46,7 +47,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
           return GestureDetector(
             onTap: () {
-              onTap(index);
+              if (index == 1) {
+                // Naviguer vers ParcelsScreen lorsque l'icône de carte est touchée
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context) => ParcelsScreen())
+                );
+              }
+              onTap(index); // Appeler la fonction onTap fournie
             },
             child: Container(
               constraints: const BoxConstraints(minWidth: 44, minHeight: 44),

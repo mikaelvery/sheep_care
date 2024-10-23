@@ -51,40 +51,32 @@ class StockManagementScreen extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                   itemCount: stockData.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 16), 
+                  separatorBuilder: (context, index) => const SizedBox(height: 10), 
                   itemBuilder: (context, index) {
                     final item = stockData[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                    return Card(
+                      elevation: 4, 
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 8,
-                            spreadRadius: 1,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
                       ),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.all(16),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16), 
                         title: Text(
                           item['name'],
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontWeight: FontWeight.w500, 
+                            fontSize: 16, 
                             color: Colors.black,
                           ),
                         ),
                         subtitle: Text(
                           'Quantité: ${item['quantity']} tonnes',
-                          style: const TextStyle(fontSize: 16, color: Colors.black54),
+                          style: const TextStyle(fontSize: 14, color: Colors.black54), 
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () {
-                            // Logique de suppression ici
+                            
                           },
                         ),
                       ),

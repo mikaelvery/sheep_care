@@ -13,10 +13,11 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+  int notificationCount = 0;
 
   void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
+      selectedIndex = index; 
     });
   }
 
@@ -64,19 +65,67 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 70, 173, 142),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.all(12),
-                    child: const Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                    ),
+                  Stack(
+                    clipBehavior: Clip.none, // Désactiver le clipping
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 70, 173, 142),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.all(6),
+                        child: const Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (notificationCount > 0)
+                        Positioned(
+                          right: -6,
+                          top: -6,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 244, 54, 54),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 20,
+                              minHeight: 20,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$notificationCount',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),
+
               const SizedBox(height: 25),
 
               // Search bar
@@ -87,13 +136,20 @@ class HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 248, 248, 248),
                     borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 3,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.search,
-                          color: Colors.black54.withOpacity(0.6)),
+                      Icon(Icons.search, color: Colors.black54.withOpacity(0.6)),
                       const SizedBox(width: 6),
                       const Expanded(
                         child: TextField(
@@ -101,11 +157,9 @@ class HomeScreenState extends State<HomeScreen> {
                           decoration: InputDecoration(
                             hintText: 'Search Parcel',
                             border: InputBorder.none,
-                            focusedBorder: InputBorder.none,                            
+                            focusedBorder: InputBorder.none,
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
+                          style: TextStyle(fontSize: 16),
                         ),
                       ),
                       Icon(Icons.mic, color: Colors.black54.withOpacity(0.6)),
@@ -124,7 +178,7 @@ class HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                        
+
                       },
                       child: CustomCard(
                         title: cardData[index]['title']!,

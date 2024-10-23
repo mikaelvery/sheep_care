@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sheep_care/widgets/bottom_navigation_bar.dart';
+import 'package:sheep_care/models/card_data.dart';
+import 'package:sheep_care/widgets/custom_card.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,40 +14,6 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  // Exemple de liste dynamique de données pour les cartes
-  final List<Map<String, String>> _cardData = [
-    {
-      'title': 'Gestion des Stocks',
-      'subtitle': 'Gérez vos stocks efficacement.',
-      'imagePath': 'assets/images/foin.png',
-    },
-    {
-      'title': 'Gestion des Brebis',
-      'subtitle': 'Suivez et gérez vos brebis.',
-      'imagePath': 'assets/brebis.png',
-    },
-    {
-      'title': 'Suivi des Cultures',
-      'subtitle': 'Suivez les cultures et récoltes.',
-      'imagePath': 'assets/images/trefle.png',
-    },
-    {
-      'title': 'Suivi du Matériel',
-      'subtitle': 'Gérez les outils et machines.',
-      'imagePath': 'assets/images/materiel.png',
-    },
-    {
-      'title': 'Statistiques',
-      'subtitle': 'Visualisez les statistiques.',
-      'imagePath': 'assets/images/statistique.png',
-    },
-    {
-      'title': 'Notifications',
-      'subtitle': 'Rappels pour les semis et traitements.',
-      'imagePath': 'assets/images/notification.png',
-    },
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -54,6 +23,9 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd MMM yyyy').format(now);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 11, 94, 89),
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -72,22 +44,23 @@ class HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Hi, Sacha',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 8),
                       Text(
-                        '18 Oct 2024',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 200, 255, 200)),
+                        formattedDate,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromARGB(255, 200, 255, 200),
+                        ),
                       ),
                     ],
                   ),
@@ -128,7 +101,10 @@ class HomeScreenState extends State<HomeScreen> {
                           decoration: InputDecoration(
                             hintText: 'Search Parcel',
                             border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,                            
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -142,7 +118,7 @@ class HomeScreenState extends State<HomeScreen> {
               // List of Cards
               Expanded(
                 child: ListView.builder(
-                  itemCount: _cardData.length,
+                  itemCount: cardData.length,
                   scrollDirection: Axis.vertical,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
@@ -151,9 +127,9 @@ class HomeScreenState extends State<HomeScreen> {
                         // Action à réaliser lors du clic sur la carte
                       },
                       child: CustomCard(
-                        title: _cardData[index]['title']!,
-                        subtitle: _cardData[index]['subtitle']!,
-                        imagePath: _cardData[index]['imagePath']!,
+                        title: cardData[index]['title']!,
+                        subtitle: cardData[index]['subtitle']!,
+                        imagePath: cardData[index]['imagePath']!,
                       ),
                     );
                   },
@@ -161,87 +137,6 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String imagePath;
-
-  const CustomCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.imagePath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 4,
-      color: const Color.fromARGB(255, 29, 145, 145),
-      margin: const EdgeInsets.only(bottom: 15),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Image à gauche
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-                height: 80,
-                width: 80,
-              ),
-            ),
-            const SizedBox(width: 15), // Espacement entre l'image et le texte
-
-            // Colonne avec le texte au centre
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Flèche à droite pour la redirection
-            GestureDetector(
-              onTap: () {
-                // Action future pour redirection vers la page de détails
-              },
-              child: const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white70,
-                size: 20,
-              ),
-            ),
-          ],
         ),
       ),
     );

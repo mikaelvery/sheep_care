@@ -29,7 +29,8 @@ dependencies:
   iconsax: ^0.0.8
   cloud_firestore: ^5.4.4
   flutter_launcher_icons: ^0.14.1
-  
+  intl: ^0.19.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

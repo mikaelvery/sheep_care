@@ -4,6 +4,7 @@ import 'package:sheep_care/models/parcels_coordinates.dart';
 import 'package:sheep_care/screens/home.dart';
 import 'package:sheep_care/screens/parcels_detail_screen.dart';
 import 'package:sheep_care/widgets/app_bar.dart';
+import 'package:sheep_care/widgets/custom_pop_scope.dart';
 
 class ParcelsScreen extends StatefulWidget {
   const ParcelsScreen({super.key});
@@ -180,41 +181,42 @@ class ParcelsScreenState extends State<ParcelsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        titleWidget: const Text(
-          'My Parcels',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+    return CustomPopScope(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          titleWidget: const Text(
+            'My Parcels',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
+          showBackButton: true,
+          onBackPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          },
+          actions: const [
+            SizedBox(width: 48),
+          ],
         ),
-        showBackButton: true,
-        onBackPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-          );
-        },
-        actions: const [
-          SizedBox(width: 48), 
-        ],
-      ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        markers: Set<Marker>.of(markers),
-        polygons: Set<Polygon>.of(polygons),
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(44.486708, 2.608853),
-          zoom: 14.2,
+        body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          markers: Set<Marker>.of(markers),
+          polygons: Set<Polygon>.of(polygons),
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(44.486708, 2.608853),
+            zoom: 14.2,
+          ),
+          mapType: MapType.satellite,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
         ),
-        mapType: MapType.satellite,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
+        backgroundColor: const Color.fromARGB(255, 11, 94, 89),
       ),
-      backgroundColor: const Color.fromARGB(255, 31, 102, 90),
     );
   }
 }
-

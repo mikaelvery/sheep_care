@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sheep_care/screens/home.dart';
-import 'package:sheep_care/screens/parcels_screen.dart';
+import 'package:ionicons/ionicons.dart';
 
-const Color bottomNavBgColor = Color.fromARGB(255, 9, 77, 77);
+const Color bottomNavBgColor = Color.fromARGB(255, 11, 94, 89);
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -14,68 +13,65 @@ class CustomBottomNavigationBar extends StatelessWidget {
     required this.onTap,
   });
 
-  void _handleNavigation(int index, BuildContext context) {
-    if (currentIndex == index) return;
-
-    switch (index) {
-      case 0:
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-          (Route<dynamic> route) => false,
-        );
-        break;
-      case 1:
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const ParcelsScreen()),
-          (Route<dynamic> route) => false,
-        );
-        break;
-      case 2:
-        // Action pour le troisième bouton
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF134E4E), // Couleur de fond mise à jour
-        borderRadius: const BorderRadius.all(Radius.circular(24)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3),
-            offset: const Offset(0, 20),
-            blurRadius: 20,
-          ),
-        ],
+        color: bottomNavBgColor,
+        border: Border(
+          top: BorderSide(width: 1, color: const Color.fromARGB(255, 7, 56, 53)), 
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(3, (index) {
+          IconData iconData;
+          String label;
+
+          switch (index) {
+            case 0:
+              iconData = currentIndex == index ? Ionicons.home : Ionicons.home_outline;
+              label = "Home";
+              break;
+            case 1:
+              iconData = currentIndex == index ? Ionicons.map : Ionicons.map_outline;
+              label = "Parcels";
+              break;
+            default:
+              iconData = currentIndex == index ? Ionicons.person : Ionicons.person_outline;
+              label = "Profile";
+              break;
+          }
+
           return GestureDetector(
             onTap: () {
               onTap(index);
-              _handleNavigation(index, context);
             },
-            child: SizedBox(
-              height: 36,
-              width: 36,
-              child: Icon(
-                index == 0
-                    ? Icons.home
-                    : index == 1
-                        ? Icons.map
-                        : Icons.person,
-                color: index == currentIndex
-                    ? const Color(
-                        0xFFEFEBE2) 
-                    : const Color(
-                        0xFF8D8D8D), 
+            child: Container(
+              constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    iconData,
+                    size: 24,
+                    color: index == currentIndex
+                        ? Colors.white 
+                        : const Color(0xFF8D8D8D),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: index == currentIndex ? FontWeight.bold : FontWeight.normal, 
+                      color: index == currentIndex
+                          ? Colors.white 
+                          : const Color(0xFF8D8D8D),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

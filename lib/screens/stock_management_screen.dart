@@ -27,7 +27,7 @@ class StockManagementScreen extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 18,
             ),
           ),
           showBackButton: true,
@@ -42,42 +42,60 @@ class StockManagementScreen extends StatelessWidget {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
           child: Column(
             children: [
               const SizedBox(height: 16),
 
-              // Liste des stocks
               Expanded(
                 child: ListView.separated(
                   itemCount: stockData.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 10), 
+                  separatorBuilder: (context, index) => const Divider(
+                    thickness: 1.0,
+                    color: Colors.white30, 
+                  ),
                   itemBuilder: (context, index) {
                     final item = stockData[index];
-                    return Card(
-                      elevation: 4, 
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16), 
-                        title: Text(
-                          item['name'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500, 
-                            fontSize: 16, 
-                            color: Colors.black,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Quantité: ${item['quantity']} tonnes',
-                          style: const TextStyle(fontSize: 14, color: Colors.black54), 
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
+                    return GestureDetector(
+                      onTap: () {
+                        
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             
-                          },
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item['name'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '${item['quantity']} tonnes',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // Bouton de suppression
+                            IconButton(
+                              icon: const Icon(Icons.delete_outline),
+                              color: Colors.redAccent,
+                              onPressed: () {
+                                
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     );

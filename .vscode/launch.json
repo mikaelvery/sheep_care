@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/mikae/Desktop/sheep_care",
-      "program": "c:/Users/mikae/Desktop/sheep_care/build/Release/outRelease",
+      "program": "c:/Users/mikae/Desktop/ProjetctsDevloppment/sheep_care/build/Release/outRelease",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

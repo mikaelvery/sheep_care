@@ -48,13 +48,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               if (index == 1) {
-                // Naviguer vers ParcelsScreen lorsque l'icône de carte est touchée
                 Navigator.pushReplacement(
                   context, 
                   MaterialPageRoute(builder: (context) => ParcelsScreen())
                 );
               }
-              onTap(index); // Appeler la fonction onTap fournie
+              onTap(index); 
             },
             child: Container(
               constraints: const BoxConstraints(minWidth: 44, minHeight: 44),

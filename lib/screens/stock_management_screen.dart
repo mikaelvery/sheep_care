@@ -82,6 +82,7 @@ class StockManagementScreen extends StatelessWidget {
                                   '${item['quantity']} tonnes',
                                   style: const TextStyle(
                                     fontSize: 14,
+                                    
                                     color: Colors.white70,
                                   ),
                                 ),
